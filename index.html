@@ -107,14 +107,18 @@ input:focus,select:focus{outline:none;border-color:var(--primary)}
 </div>
 <script>
 /* ====== STATE ====== */
-var S={tab:'dash',pwd:'cp2024$$',online:false,DB:[],PARAM:{},bpData:[],comments:null};
+var S={tab:'dash',pwd:'88888888',online:false,DB:[],PARAM:{},bpData:[],comments:null};
 var SRV='https://3000-b9f212b67f5a4b76ba8c7452d7f34b94.e2b.ap-beijing.sandbox.cloudstudio.club';
 
 /* ====== AUTH ====== */
 function login(){
   var p=document.getElementById('pwd').value;
-  if(p===S.pwd){document.getElementById('loginBox').style.display='none';document.getElementById('sidebar').style.display='flex';document.getElementById('main').style.display='block';init()}
-  else document.getElementById('loginErr').textContent='密码错误'}
+  if(p!==S.pwd){document.getElementById('loginErr').textContent='密码错误';return}
+  document.getElementById('loginBox').style.display='none';
+  document.getElementById('sidebar').style.display='flex';
+  document.getElementById('main').style.display='block';
+  setTimeout(init,100);
+}
 function logout(){document.getElementById('loginBox').style.display='flex';document.getElementById('sidebar').style.display='none';document.getElementById('main').style.display='none';document.getElementById('pwd').value=''}
 function toast(m,t){var d=document.createElement('div');d.className='toast';d.textContent=m;document.body.appendChild(d);setTimeout(function(){d.remove()},t||2000)}
 
