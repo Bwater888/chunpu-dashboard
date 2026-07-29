@@ -389,6 +389,7 @@ function navShell(tab){
 }
 
 function initShell(){
+  try{
   // Load BP data
   try{var d=JSON.parse(localStorage.getItem('bp_v5')||'[]');window._bpHist=d}catch(e){window._bpHist=[]}
   // Load comments
