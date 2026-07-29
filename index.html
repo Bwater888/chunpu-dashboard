@@ -106,6 +106,7 @@ input:focus,select:focus{outline:none;border-color:var(--primary)}
   <div id="content"></div>
 </div>
 <script>
+window.onerror=function(m){alert('JS Error: '+m);return true};
 /* ====== STATE ====== */
 var S={tab:'dash',pwd:'88888888',online:false,DB:[],PARAM:{},bpData:[],comments:null};
 var SRV='https://3000-b9f212b67f5a4b76ba8c7452d7f34b94.e2b.ap-beijing.sandbox.cloudstudio.club';
