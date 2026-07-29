@@ -233,14 +233,13 @@ tr:hover td{background:#fafaff}
 @media(max-width:900px){.kpi-row{grid-template-columns:repeat(3,1fr)}.pf-row{grid-template-columns:1fr}.ch-row{grid-template-columns:1fr}.set-grid{grid-template-columns:1fr}}
 
 </style>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head><body>
 
 <div class="logo" id="loginBox"><div class="lb">
 <h2>纯朴渠道-视频号1组</h2><p>仓盈庾亿，年岁有息</p>
 <input type="password" id="pwd" placeholder="ACCESS CODE" onkeydown="if(event.key==='Enter')doLogin()">
 <div class="err" id="loginErr"></div>
-<button class="btn" onclick="alert(1);doLogin()">进入</button>
+<button class="btn" onclick="doLogin()">进入</button>
 </div></div>
 
 <div class="sb" id="sidebar">
@@ -366,7 +365,10 @@ tr:hover td{background:#fafaff}
 // ====== AUTH ======
 function doLogin(){var p=document.getElementById('pwd').value;if(p!=='88888888'){document.getElementById('loginErr').textContent='ACCESS DENIED';return}doEnter()}
 function doLogout(){document.body.classList.remove('logged');document.getElementById('pwd').value=''}
-function doEnter(){document.body.classList.add('logged');initShell()}
+function doEnter(){document.body.classList.add('logged');initShell();
+// Load Chart.js async
+var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js';document.head.appendChild(s);
+}
 function doRefresh(){if(typeof refresh==='function')refresh();renderBPHist()}
 
 // ====== PRELOAD DATA ======
