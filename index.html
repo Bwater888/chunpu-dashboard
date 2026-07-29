@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>纯朴渠道 · 综合看板</title>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>var Chart=null;function loadChart(cb){if(Chart){cb();return}var s=document.createElement("script");s.src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js";s.onload=cb;s.onerror=function(){console.log("Chart.js 加载失败，图表不可用")};document.head.appendChild(s)}</script>
 <style>:root {
   --bg: #f5f6fa; --card: #fff; --sidebar: #0f1724; --primary: #4f46e5;
   --green: #10b981; --red: #ef4444; --orange: #f59e0b; --blue: #3b82f6;
@@ -178,24 +178,24 @@ function renderDash(){
   h+='</div>';
   h+='<div class="chart-row"><div class="chart-card"><div class="chart-title">日度GMV趋势</div><div class="chart-body"><canvas id="chDaily"></canvas></div></div>';
   h+='<div class="chart-card"><div class="chart-title">产品利润占比</div><div class="chart-body"><canvas id="chPie"></canvas></div></div></div>';
-  document.getElementById('content').innerHTML=h;
+  document.getElementById('content').innerHTML=h;loadChart(function(){
   // Charts
   var dates={};S.DB.forEach(function(d){if(!dates[d.date])dates[d.date]={g:0,p:0};dates[d.date].g+=d.总成交金额||d.gmv||0;dates[d.date].p+=d.利润||0});
   var dkeys=Object.keys(dates).sort();var dgmv=dkeys.map(function(k){return dates[k].g/1e4});var dprofit=dkeys.map(function(k){return dates[k].p/1e4});
   mkLine('chDaily',dkeys,[{l:'GMV(万)',d:dgmv,c:'#4f46e5'},{l:'利润(万)',d:dprofit,c:'#10b981'}]);
   var prod={};S.DB.forEach(function(d){var p=d.product||d.产品;if(!prod[p])prod[p]=0;prod[p]+=d.利润||0});
   var pkeys=Object.keys(prod);var pvals=pkeys.map(function(k){return prod[k]/1e4});
-  mkPie('chPie',pkeys,pvals);
+  mkPie('chPie',pkeys,pvals);});
 }
 function kpi(label,val,sub,color){return '<div class="kpi-card"><div class="kpi-label">'+label+'</div><div class="kpi-val" style="color:'+color+'">'+val+'</div>'+(sub?'<div class="kpi-sub">'+sub+'</div>':'')+'</div>'}
 
 /* ====== CHART HELPERS ====== */
 var charts={};
-function mkLine(id,labels,sets){
+function mkLine(id,labels,sets){if(!Chart||!document.getElementById(id))return;
   var ctx=document.getElementById(id).getContext('2d');if(charts[id])charts[id].destroy();
   charts[id]=new Chart(ctx,{type:'line',data:{labels:labels,datasets:sets.map(function(d){return{label:d.l,data:d.d,borderColor:d.c,borderWidth:2,tension:.4,fill:false,pointRadius:2}})},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{boxWidth:8,font:{size:10},usePointStyle:true}}},scales:{y:{grid:{color:'#f1f5f9'}}}}});
 }
-function mkPie(id,labels,vals){
+function mkPie(id,labels,vals){if(!Chart||!document.getElementById(id))return;
   var ctx=document.getElementById(id).getContext('2d');if(charts[id])charts[id].destroy();
   charts[id]=new Chart(ctx,{type:'doughnut',data:{labels:labels,datasets:[{data:vals,backgroundColor:['#4f46e5','#10b981','#f59e0b','#ef4444','#3b82f6']}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{font:{size:10},padding:12}}}}});
 }
@@ -206,7 +206,7 @@ function renderDetail(){
   h+='<div style="max-height:70vh;overflow:auto"><table><thead><tr><th>日期</th><th>平台</th><th>产品</th><th class="ar">总成交</th><th class="ar">总消耗</th><th class="ar">ROI</th><th class="ar">利润</th><th class="ar">利润率</th></tr></thead><tbody>';
   S.DB.forEach(function(d){h+='<tr><td>'+d.date+'</td><td>'+d.platform+'</td><td>'+d.product+'</td><td class="ar">'+fm(d.总成交金额||d.gmv)+'</td><td class="ar">'+fm(d.总消耗||d.spend)+'</td><td class="ar">'+fm(d.总ROI)+'</td><td class="ar" style="color:'+(d.利润>=0?'#10b981':'#ef4444')+'">'+fm(d.利润,2)+'</td><td class="ar">'+fp(d.利润率||0)+'</td></tr>'});
   h+='</tbody></table></div></div>';
-  document.getElementById('content').innerHTML=h;
+  document.getElementById('content').innerHTML=h;loadChart(function(){
 }
 function renderProduct(){
   var prod={};S.DB.forEach(function(d){var p=d.product;if(!prod[p])prod[p]={gmv:0,spend:0,profit:0};prod[p].gmv+=d.总成交金额||d.gmv||0;prod[p].spend+=d.总消耗||d.spend||0;prod[p].profit+=d.利润||0});
@@ -214,7 +214,7 @@ function renderProduct(){
   Object.keys(prod).forEach(function(p){var d=prod[p];h+='<tr><td><b>'+p+'</b></td><td class="ar">'+fm(d.gmv)+'</td><td class="ar">'+fm(d.spend)+'</td><td class="ar" style="color:'+(d.profit>=0?'#10b981':'#ef4444')+'">'+fm(d.profit,2)+'</td><td class="ar">'+fm(d.spend>0?d.gmv/d.spend:0)+'</td><td class="ar">'+fp(d.gmv>0?d.profit/d.gmv:0)+'</td></tr>'});
   h+='</tbody></table></div>';
   h+='<div class="chart-row"><div class="chart-card"><div class="chart-title">产品利润趋势</div><div class="chart-body"><canvas id="chProdLine"></canvas></div></div></div>';
-  document.getElementById('content').innerHTML=h;
+  document.getElementById('content').innerHTML=h;loadChart(function(){
   // product line chart
   var prodDates={},prods=['贴贴霜','泥膜','防脱','粉底液'];var allDates=[];
   S.DB.forEach(function(d){if(allDates.indexOf(d.date)<0)allDates.push(d.date)});allDates.sort();
@@ -234,7 +234,7 @@ function renderBP(){
   h+='<div id=bpResult></div>';
   if(!S.comments)h+='<div style=color:var(--orange);font-size:11px;margin-top:8px>未加载评论库，请检查网络</div>';
   h+='</div>';
-  document.getElementById('content').innerHTML=h;
+  document.getElementById('content').innerHTML=h;loadChart(function(){
   document.getElementById('bpStage').onchange=function(){
     var s=this.value;var stg={冷启动:7,爬坡期:9,爆发期:11,稳定期:7};
     if(stg[s])document.getElementById('bpTotal').value=stg[s];
@@ -302,7 +302,7 @@ function renderBPHist(){
     h+='<div style=margin-top:4px><button class="btn btn-o" style=font-size:10px;padding:2px 8px onclick=showBPDetail('+i+')>详情</button> ';
     h+='<button style=font-size:10px;padding:2px 8px;background:var(--red);color:#fff;border:none;border-radius:4px;cursor:pointer onclick=delBP('+i+')>删除</button></div></div>';
   })}h+='</div>';
-  document.getElementById('content').innerHTML=h;
+  document.getElementById('content').innerHTML=h;loadChart(function(){
 }
 function showBPDetail(idx){var r=S.bpData[idx];if(!r)return;var h='<b>'+r.cid+'</b><br><small>'+r.prod+' | '+r.stage+'</small>';r.items.forEach(function(a){h+='<div style=padding:4px 0;font-size:12px;border-bottom:1px solid var(--border)>'+a.code+' '+a.text+(a.img?' <img style=width:40px;height:40px;object-fit:cover src='+(a.img.indexOf('http')===0?a.img:'images/'+a.img)+'>':'')+'</div>'});document.getElementById('content').innerHTML+='<div class="card" style=margin-top:8px>'+h+'</div>'}
 async function delBP(idx){if(!confirm('删除？'))return;S.bpData.splice(idx,1);if(S.online)try{await fetch(SRV+'/api/bp',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(S.bpData)})}catch(e){}renderBPHist()}
@@ -314,7 +314,7 @@ function renderSettings(){
   if(S.PARAM.commission){h+='<div style=margin-top:8px><b>佣金率</b></div>';
     Object.keys(S.PARAM.commission).forEach(function(pl){Object.keys(S.PARAM.commission[pl]).forEach(function(pr){h+=pl+' '+pr+': '+S.PARAM.commission[pl][pr]+'% | '})})}
   h+='</div>';
-  document.getElementById('content').innerHTML=h;
+  document.getElementById('content').innerHTML=h;loadChart(function(){
 }
 
 init();</script></body></html>
