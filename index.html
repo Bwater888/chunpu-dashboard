@@ -252,14 +252,16 @@ var _bpStages={"冷启动":{t:7,t1:.5,t2:.35,t3:.1,t4:.05},"爬坡期":{t:9,t1:.
 
 // ====== NAVIGATION SHELL ======
 function navShell(tab){
-  if(tab==='bp'){renderBP();return}
-  if(tab==='bphist'){renderBPHist();return}
+  // Hide all BP containers
+  document.getElementById('tc-bp').style.display='none';
+  document.getElementById('tc-bphist').style.display='none';
   // Activate sidebar
   document.querySelectorAll('.sb-n div[data-nav]').forEach(function(d){d.classList.toggle('ac',d.dataset.nav===tab)});
-  // Call original swTab
+  // BP tabs - show BP content, hide original tabs
+  if(tab==='bp'){document.getElementById('tc-bp').style.display='block';renderBP();return}
+  if(tab==='bphist'){document.getElementById('tc-bphist').style.display='block';renderBPHist();return}
+  // Original tabs - show via swTab
   if(typeof swTab==='function')swTab(tab);
-  // Also activate original tab buttons
-  document.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');var map={"entry":"录入","table":"明细","psum":"汇总","pchart":"分析","targets":"目标","settings":"参数"};if(b.textContent.indexOf(map[tab]||'')>=0)b.classList.add('active')});
 }
 
 function initShell(){
