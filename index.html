@@ -279,7 +279,7 @@ tr:hover td{background:rgba(232,168,56,.04)}
 
 <script>
 // ====== AUTH ======
-function doLogin(){var p=document.getElementById('pwd').value;if(p!=='88888888'){document.getElementById('loginErr').textContent='ACCESS DENIED';return}document.getElementById('loginBox').style.display='none';document.body.classList.add('logged');initShell();var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js';document.head.appendChild(s);}
+function doLogin(){alert('OK');var p=document.getElementById('pwd').value;if(p!=='88888888'){document.getElementById('loginErr').textContent='ACCESS DENIED';return}document.getElementById('loginBox').style.display='none';document.body.classList.add('logged');try{initShell()}catch(e){alert('ERR:'+e.message)};var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js';document.head.appendChild(s);}
 function doLogout(){document.body.classList.remove('logged');document.getElementById('loginBox').style.display='';document.getElementById('pwd').value=''}
 function doRefresh(){if(typeof refresh==='function')refresh();renderBPHist()}
 
