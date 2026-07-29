@@ -77,7 +77,7 @@ input:focus,select:focus{outline:none;border-color:var(--pri)}
 <script>
 var S={cur:'dash',DB:[],PARAM:{ksRebate:0.1},bpData:[]};
 var CMTS=null; // loaded from comments.json
-var SRV='';
+var SRV='http://10.131.0.168:3000';
 
 function doLogin(){var p=document.getElementById('pwd').value;if(p!=='88888888')return;document.getElementById('loginBox').style.display='none';document.getElementById('sidebar').style.display='flex';document.getElementById('main').style.display='block';init()}
 function doLogout(){document.getElementById('loginBox').style.display='';document.getElementById('sidebar').style.display='none';document.getElementById('main').style.display='none';document.getElementById('pwd').value=''}
