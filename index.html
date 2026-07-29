@@ -219,7 +219,7 @@ function renderProduct(){
   S.DB.forEach(function(d){if(allDates.indexOf(d.date)<0)allDates.push(d.date)});allDates.sort();
   prods.forEach(function(p){prodDates[p]=allDates.map(function(dt){var sum=0;S.DB.forEach(function(d){if(d.date===dt&&d.product===p)sum+=d.利润||0});return sum/1e4})});
   var sets=prods.map(function(p,i){return{l:p,d:prodDates[p],c:['#4f46e5','#10b981','#f59e0b','#ef4444'][i]}});
-  mkLine('chProdLine',allDates.map(function(d){\n    return d.slice(5)\n  }),sets);
+  mkLine('chProdLine',allDates.map(function(d){return d.slice(5)}),sets);
 }
 
 /* ====== 包评 ====== */
