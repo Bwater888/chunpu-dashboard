@@ -137,7 +137,7 @@ tr:hover td{background:#fafaff}
 
 <div class="mn" id="main">
 <div class="app">
-
+<div id="dash-wrap">
 <div id="loader" class="loader" style="display:none"><div class="spin"></div></div>
 
 <div class="header">
@@ -217,7 +217,7 @@ tr:hover td{background:#fafaff}
 
 <div class="toast" id="toast"></div>
 
-
+</div>
 <!-- BP Panel -->
 <div id="tc-bp" style="display:none">
 <div class="card"><div class="card-title">💬 包评生成器</div>
@@ -257,10 +257,11 @@ function navShell(tab){
   document.getElementById('tc-bp').style.display='none';
   // Activate sidebar
   document.querySelectorAll('.sb-n div[data-nav]').forEach(function(d){d.classList.toggle('ac',d.dataset.nav===tab)});
-  // BP tab - show BP content, hide original tabs
-  if(tab==='bp'){document.getElementById('tc-bp').style.display='block';document.querySelectorAll('.tab-content.on').forEach(function(e){e.classList.remove('on')});renderBP();return}
-  // Original tabs - show via swTab, clear inline styles first
-  document.querySelectorAll('.tab-content').forEach(function(e){e.style.display=''});
+  // BP tab - hide dashboard, show BP
+  if(tab==='bp'){document.getElementById('dash-wrap').style.display='none';document.getElementById('tc-bp').style.display='block';renderBP();return}
+  // Original tabs - show dashboard, hide BP
+  document.getElementById('dash-wrap').style.display='';
+  document.getElementById('tc-bp').style.display='none';
   if(typeof swTab==='function')swTab(tab);
 }
 
@@ -1567,9 +1568,6 @@ init();
 
 /* ====== BP MODULE ====== */
 function renderBP(){
-  // Hide original dashboard tabs
-  document.querySelectorAll(".tab-content").forEach(function(tc){tc.style.display="none";tc.classList.remove("on")});
-  document.getElementById("tc-bp").style.display="block";
   document.querySelectorAll('.sb-n div[data-nav]').forEach(function(d){d.classList.toggle('ac',d.dataset.nav==='bp')});
   var s=document.getElementById("bpStage");if(s)s.onchange=function(){var st=_bpStages[this.value];if(st)document.getElementById("bpTotal").value=st.t};
   renderBPHist();
