@@ -1488,7 +1488,7 @@ async function init(){
   // 自动刷新
   _arId=setInterval(async()=>{if(online){await loadData();refresh()}},15000);
 }
-init();
+// init removed - called from doLogin
 
 
 var _bpComments=null;
