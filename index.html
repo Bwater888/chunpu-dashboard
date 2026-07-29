@@ -1,52 +1,188 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head><meta charset="UTF-8"><title>纯朴渠道</title>
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>纯朴渠道-视频号1组</title>
 <style>
+:root{--bg:#f5f6fa;--card:#fff;--side:#0f1724;--pri:#4f46e5;--gr:#10b981;--rd:#ef4444;--or:#f59e0b;--tx:#1a1a2e;--mu:#94a3b8;--bd:#e2e8f0}
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:-apple-system,"PingFang SC",sans-serif;background:#0f1724;display:flex;align-items:center;justify-content:center;height:100vh}
-.box{background:#fff;border-radius:12px;padding:40px;width:340px;text-align:center;box-shadow:0 10px 40px rgba(0,0,0,.2)}
-h2{font-size:20px;margin-bottom:4px}p{font-size:12px;color:#999;margin-bottom:20px}
-input{width:100%;padding:10px;border:1px solid #e2e8f0;border-radius:8px;font-size:14px;margin-bottom:12px;text-align:center}
-button{width:100%;padding:10px;background:#4f46e5;color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer}
-.sidebar{width:220px;background:#0f1724;color:#fff;height:100vh;display:none;flex-direction:column;position:fixed;left:0;top:0}
-.main{display:none;margin-left:220px;padding:20px;background:#f5f6fa;min-height:100vh;width:100%}
+body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);min-height:100vh}
+.login-overlay{position:fixed;inset:0;background:var(--side);display:flex;align-items:center;justify-content:center;z-index:999}
+.login-box{background:var(--card);border-radius:12px;padding:40px;width:360px;text-align:center;box-shadow:0 10px 40px rgba(0,0,0,.2)}
+.login-box h2{font-size:20px;margin-bottom:4px}.login-box p{font-size:12px;color:var(--mu);margin-bottom:24px}
+.login-box input{width:100%;padding:10px;border:1px solid var(--bd);border-radius:8px;font-size:14px;margin-bottom:12px;text-align:center}
+.login-box input:focus{outline:none;border-color:var(--pri)}
+.btn{display:block;width:100%;padding:10px;background:var(--pri);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;transition:.15s}
+.btn:hover{opacity:.9}.btn-sm{padding:5px 12px;font-size:11px;width:auto;display:inline-block}
+.btn-o{background:#fff;color:var(--pri);border:1px solid var(--bd)}.btn-g{background:#fff;color:var(--mu);border:1px solid var(--bd)}
+.sidebar{width:220px;background:var(--side);color:#fff;position:fixed;left:0;top:0;height:100vh;display:none;flex-direction:column}
+.sb-logo{padding:20px;font-size:14px;font-weight:700;border-bottom:1px solid rgba(255,255,255,.1);display:flex;align-items:center;gap:8px}
+.sb-logo span{background:var(--pri);width:26px;height:26px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;font-size:13px}
+.sb-nav{flex:1;padding:8px}.sb-nav a{display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:8px;cursor:pointer;font-size:13px;color:rgba(255,255,255,.6);text-decoration:none;margin-bottom:2px;transition:.15s}
+.sb-nav a:hover,.sb-nav a.active{background:rgba(79,70,229,.25);color:#fff;font-weight:600}
+.sb-foot{padding:12px 16px;font-size:11px;color:rgba(255,255,255,.3);border-top:1px solid rgba(255,255,255,.1);display:flex;justify-content:space-between}
+.sb-foot a{color:rgba(255,255,255,.3);cursor:pointer;text-decoration:none}.sb-foot a:hover{color:#fff}
+.main{margin-left:220px;padding:20px 24px;display:none;min-height:100vh}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.topbar h1{font-size:20px;font-weight:700}
+.topbar-r{display:flex;align-items:center;gap:10px;font-size:12px;color:var(--mu)}
+.dot{width:8px;height:8px;border-radius:50%;display:inline-block}.dot.on{background:var(--gr)}.dot.off{background:var(--rd)}
+.card{background:var(--card);border-radius:10px;padding:16px;box-shadow:0 1px 3px rgba(0,0,0,.06);margin-bottom:12px}
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px}
+.kpi{padding:16px;background:var(--card);border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.kpi-lbl{font-size:11px;color:var(--mu);margin-bottom:4px}.kpi-val{font-size:28px;font-weight:800}
+.chart-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.chart-wrap{background:var(--card);border-radius:10px;padding:14px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.chart-wrap h3{font-size:11px;color:var(--mu);margin-bottom:8px;font-weight:600}
+.chart-body{position:relative;height:260px}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:#f8fafc;padding:8px 10px;text-align:left;font-weight:600;color:var(--mu);border-bottom:2px solid var(--bd)}
+td{padding:7px 10px;border-bottom:1px solid var(--bd)}tr:hover td{background:#f8fafc}
+.ar{text-align:right}.gr{color:var(--gr)}.rd{color:var(--rd)}.or{color:var(--or)}
+.section-title{font-size:13px;font-weight:700;color:var(--pri);margin-bottom:8px;padding-bottom:6px;border-bottom:2px solid var(--bd)}
+.row{display:flex;gap:10px;margin-bottom:10px;flex-wrap:wrap;align-items:center}
+input,select{padding:6px 10px;border:1px solid var(--bd);border-radius:6px;font-size:13px;background:#fff}
+input:focus,select:focus{outline:none;border-color:var(--pri)}
+.tag{font-size:9px;padding:1px 6px;border-radius:3px;font-weight:600;white-space:nowrap}
+.t1{background:#fff0f0;color:#ef4444}.t2{background:#fff7e6;color:#f59e0b}.t3{background:#e6f7ff;color:#3b82f6}
+.bp-res{padding:6px 0;border-bottom:1px solid var(--bd);font-size:13px;display:flex;align-items:center;gap:8px}
+.bp-res:last-child{border-bottom:none}
+.bp-img{width:32px;height:32px;object-fit:cover;border-radius:4px;border:1px solid var(--bd)}
+.hist-item{background:#f8fafc;border-radius:8px;padding:10px;margin-bottom:6px}
+.toast{position:fixed;top:20px;right:20px;background:var(--side);color:#fff;padding:10px 18px;border-radius:8px;font-size:13px;z-index:999;animation:in .3s}
+@keyframes in{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
 </style>
 </head>
 <body>
-<div id="loginBox" class="box">
-  <h2>纯朴渠道-视频号1组</h2>
-  <p>仓盈庾亿，年岁有息</p>
-  <input type="password" id="pwd" placeholder="输入密码" onkeydown="if(event.key==='Enter')doLogin()">
-  <button onclick="doLogin()">进入</button>
+<div class="login-overlay" id="loginBox">
+  <div class="login-box">
+    <h2>纯朴渠道-视频号1组</h2>
+    <p>仓盈庾亿，年岁有息</p>
+    <input type="password" id="pwd" placeholder="输入密码" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="btn" onclick="doLogin()">进入</button>
+  </div>
 </div>
 <div class="sidebar" id="sidebar">
-  <div style="padding:20px;font-size:16px;font-weight:700;border-bottom:1px solid rgba(255,255,255,.1)">纯朴渠道</div>
-  <div style="padding:12px;flex:1"><div onclick="showDash()" style="padding:10px;cursor:pointer;border-radius:6px;background:rgba(79,70,229,.25);color:#fff">📊 数据看板</div></div>
-  <div style="padding:12px;font-size:11px;color:rgba(255,255,255,.3)"><a onclick="doLogout()" style="color:rgba(255,255,255,.3);cursor:pointer">退出</a></div>
+  <div class="sb-logo"><span>纯</span>纯朴渠道-视频号1组</div>
+  <div class="sb-nav">
+    <a onclick="nav('dash')" data-nav="dash" class="active">📊 数据看板</a>
+    <a onclick="nav('detail')" data-nav="detail">📋 数据明细</a>
+    <a onclick="nav('product')" data-nav="product">📈 产品分析</a>
+    <a onclick="nav('bp')" data-nav="bp">💬 包评生成</a>
+    <a onclick="nav('bphist')" data-nav="bphist">📁 包评历史</a>
+    <a onclick="nav('settings')" data-nav="settings">⚙️ 参数设置</a>
+  </div>
+  <div class="sb-foot"><span id="syncTime">离线</span><a onclick="doLogout()">退出</a></div>
 </div>
 <div class="main" id="main">
-  <h1 id="pageTitle">数据看板</h1>
-  <p id="status" style="color:#999"></p>
+  <div class="topbar"><h1 id="pageTitle">数据看板</h1><div class="topbar-r"><span class="dot" id="syncDot"></span><span id="syncStatus">离线</span><button class="btn btn-o btn-sm" onclick="nav(S.cur)">刷新</button></div></div>
   <div id="content"></div>
 </div>
 <script>
-function doLogin(){
-  var p=document.getElementById('pwd').value;
-  if(p!=='88888888'){alert('密码错误');return}
-  document.getElementById('loginBox').style.display='none';
-  document.getElementById('sidebar').style.display='flex';
-  document.getElementById('main').style.display='block';
-  showDash();
+var S={cur:'dash',DB:[],PARAM:{ksRebate:0.1},bpData:[]};
+var CMTS=null; // loaded from comments.json
+var SRV='';
+
+function doLogin(){var p=document.getElementById('pwd').value;if(p!=='88888888')return;document.getElementById('loginBox').style.display='none';document.getElementById('sidebar').style.display='flex';document.getElementById('main').style.display='block';init()}
+function doLogout(){document.getElementById('loginBox').style.display='';document.getElementById('sidebar').style.display='none';document.getElementById('main').style.display='none';document.getElementById('pwd').value=''}
+function toast(m,t){var d=document.createElement('div');d.className='toast';d.textContent=m;document.body.appendChild(d);setTimeout(function(){d.remove()},t||2000)}
+function fm(v,d){d=d||1;if(v==null||isNaN(v))return'--';return Number(v).toLocaleString('zh-CN',{minimumFractionDigits:d,maximumFractionDigits:d})}
+function fp(v){if(v==null||isNaN(v))return'--';return (Number(v)*100).toFixed(1)+'%'}
+function agg(arr){var s=0,g=0,p=0;arr.forEach(function(d){var sp=d.总消耗||0,gm=d.总成交金额||d.gmv||0;s+=sp;g+=gm;if(d.platform==='快手'){var cm=d.commissionRate||(d.佣金率||72)/100,rm=d.returnRate||(d.退货率||30)/100;var as=sp/(1+(S.PARAM.ksRebate||0.1));p+=gm*cm*(1-rm)-as}else p+=d.利润||0});return{总消耗:s,总成交金额:g,总利润:p,总ROI:s>0?g/s:0}}
+
+async function init(){
+  // load comments
+  try{var r=await fetch('comments.json');if(r.ok){var j=await r.json();CMTS=j.comments;document.getElementById('syncTime').textContent='评论库:'+j.updated}}catch(e){}
+  // load backend
+  try{var r2=await fetch(SRV+'/api/params');var j2=await r2.json();if(j2.success){S.PARAM=j2.params||S.PARAM;S.PARAM.ksRebate=0.1;var r3=await fetch(SRV+'/api/data');S.DB=(await r3.json()).data||[];try{var r4=await fetch(SRV+'/api/bp');S.bpData=(await r4.json()).data||[]}catch(e){};document.getElementById('syncDot').className='dot on';document.getElementById('syncStatus').textContent='在线';document.getElementById('syncTime').textContent='数据在线'}}catch(e){}
+  nav('dash');
 }
-function doLogout(){
-  document.getElementById('loginBox').style.display='';
-  document.getElementById('sidebar').style.display='none';
-  document.getElementById('main').style.display='none';
+
+function nav(tab){
+  S.cur=tab;var as=document.querySelectorAll('.sb-nav a');as.forEach(function(a){a.classList.toggle('active',a.dataset.nav===tab)});
+  var titles={dash:'数据看板',detail:'数据明细',product:'产品分析',bp:'包评生成器',bphist:'包评历史',settings:'参数设置'};
+  document.getElementById('pageTitle').textContent=titles[tab]||tab;
+  if(tab==='dash')rDash();else if(tab==='detail')rDetail();else if(tab==='product')rProduct();else if(tab==='bp')rBP();else if(tab==='bphist')rBPHist();else if(tab==='settings')rSettings();
 }
-function showDash(){
-  document.getElementById('content').innerHTML='<p>看板数据加载中...</p>';
-  document.getElementById('status').textContent='在线模式';
+
+function rDash(){
+  var a=agg(S.DB),h='<div class=kpi-row>';
+  h+=kpi('总GMV',fm(a.总成交金额/1e4,0)+'万',var(--pri));
+  h+=kpi('总消耗',fm(a.总消耗/1e4,0)+'万',var(--or));
+  h+=kpi('总利润',fm(a.总利润/1e4,2)+'万',a.总利润>=0?var(--gr):var(--rd));
+  h+=kpi('综合ROI',fm(a.总ROI)+'x',var(--pri));
+  h+='</div><div class=kpi-row>';
+  var va=agg(S.DB.filter(function(d){return d.platform==='视频号'})),ka=agg(S.DB.filter(function(d){return d.platform==='快手'}));
+  h+=kpi('视频号利润',fm(va.总利润/1e4,2)+'万',var(--gr));
+  h+=kpi('快手利润',fm(ka.总利润/1e4,2)+'万',var(--or));
+  h+=kpi('总记录',S.DB.length+'条',var(--mu));
+  h+=kpi('在线',document.getElementById('syncStatus').textContent,var(--mu));
+  h+='</div>';
+  // table summary
+  var prod={},dates={};S.DB.forEach(function(d){var p=d.product;if(!prod[p])prod[p]={g:0,s:0,p:0};prod[p].g+=d.总成交金额||d.gmv||0;prod[p].s+=d.总消耗||0;prod[p].p+=d.利润||0;if(!dates[d.date])dates[d.date]={g:0,s:0,p:0};dates[d.date].g+=d.总成交金额||d.gmv||0;dates[d.date].p+=d.利润||0});
+  h+='<div class=card><div class=section-title>产品汇总</div><table><thead><tr><th>产品</th><th class=ar>GMV</th><th class=ar>消耗</th><th class=ar>利润</th><th class=ar>ROI</th></tr></thead><tbody>';
+  Object.keys(prod).forEach(function(p){var d=prod[p];h+='<tr><td><b>'+p+'</b></td><td class=ar>'+fm(d.g)+'</td><td class=ar>'+fm(d.s)+'</td><td class="ar '+(d.p>=0?'gr':'rd')+'">'+fm(d.p,2)+'</td><td class=ar>'+fm(d.s>0?d.g/d.s:0)+'</td></tr>'});
+  h+='</tbody></table></div>';
+  document.getElementById('content').innerHTML=h;
 }
-</script>
-</body>
-</html>
+function kpi(l,v,c){return '<div class=kpi><div class=kpi-lbl>'+l+'</div><div class=kpi-val style=color:'+c+'>'+v+'</div></div>'}
+
+function rDetail(){
+  var h='<div class=card><div class=section-title>数据明细 ('+S.DB.length+'条)</div><div style=max-height:70vh;overflow:auto><table><thead><tr><th>日期</th><th>平台</th><th>产品</th><th class=ar>成交</th><th class=ar>消耗</th><th class=ar>ROI</th><th class=ar>利润</th></tr></thead><tbody>';
+  S.DB.forEach(function(d){h+='<tr><td>'+d.date+'</td><td>'+d.platform+'</td><td>'+d.product+'</td><td class=ar>'+fm(d.总成交金额||d.gmv)+'</td><td class=ar>'+fm(d.总消耗||d.spend)+'</td><td class=ar>'+fm(d.总ROI)+'</td><td class="ar '+(d.利润>=0?'gr':'rd')+'">'+fm(d.利润,2)+'</td></tr>'});
+  h+='</tbody></table></div></div>';
+  document.getElementById('content').innerHTML=h;
+}
+function rProduct(){rDash()}
+function rSettings(){
+  document.getElementById('content').innerHTML='<div class=card><div class=section-title>参数设置</div><p style=font-size:13px>快手返点: '+((S.PARAM.ksRebate||0.1)*100).toFixed(1)+'%</p><p style=font-size:11px;color:var(--mu)>其他参数从后端加载</p></div>';
+}
+
+// ===== BP =====
+var bpStages={冷启动:{total:7,top1:.5,top2:.35,top3:.1,l4:.05},爬坡期:{total:9,top1:.45,top2:.38,top3:.12,l4:.05},爆发期:{total:11,top1:.48,top2:.32,top3:.15,l4:.05},稳定期:{total:7,top1:.35,top2:.35,top3:.2,l4:.1}};
+function rBP(){
+  var h='<div class=card><div class=section-title>包评生成器</div>';
+  h+='<div class=row><label>素材ID</label><input id=bpCid style=width:160px><label>产品</label><select id=bpProd><option value="">--选产品--</option><option value=贴贴霜>贴贴霜</option><option value=泥膜>泥膜</option><option value=防脱>防脱</option><option value=粉底液>粉底液</option></select><label>阶段</label><select id=bpStage><option value=冷启动>冷启动</option><option value=爬坡期>爬坡期</option><option value=爆发期>爆发期</option><option value=稳定期>稳定期</option></select></div>';
+  h+='<div class=row><label>总条数</label><input type=number id=bpTotal value=7 min=1 max=20 style=width:70px><button class="btn btn-sm" style=width:auto onclick=genBP()>生成包评单</button></div>';
+  h+='<div id=bpResult></div>';
+  if(!CMTS)h+='<div style=color:var(--or);font-size:11px;margin-top:8px>评论库未加载(comments.json)</div>';
+  h+='</div>';
+  document.getElementById('content').innerHTML=h;
+  document.getElementById('bpStage').onchange=function(){var s=this.value;var t=bpStages[s];if(t)document.getElementById('bpTotal').value=t.total};
+}
+function genBP(){
+  if(!CMTS){alert('评论库未加载');return}
+  var cid=document.getElementById('bpCid').value.trim(),prod=document.getElementById('bpProd').value,stage=document.getElementById('bpStage').value,total=parseInt(document.getElementById('bpTotal').value)||7;
+  if(!cid||!prod){alert('请输入素材ID和产品');return}
+  var cmts=CMTS[prod];if(!cmts){alert('该产品暂无评论');return}
+  var stg=bpStages[stage]||bpStages.冷启动;
+  var all=[];Object.keys(cmts).forEach(function(k){all.push({code:k,cmts:cmts[k],prio:cmts[k][0].prio})});all.sort(function(a,b){return a.prio.localeCompare(b.prio)});
+  var tiers={1:[],2:[],3:[],4:[]};all.forEach(function(s){var t=parseInt(s.prio.split(' ')[0]);tiers[t].push(s)});
+  var alloc=[];function fill(list,count){if(!list||list.length===0)return;var p=Math.floor(count/list.length),r=count%list.length;list.forEach(function(s,i){var n=i<r?p+1:p;for(var j=0;j<n&&j<s.cmts.length;j++)alloc.push({code:s.code,text:s.cmts[j].text,prio:s.prio,idx:j,img:s.cmts[j].img||''})})}
+  fill(tiers[1],Math.round(total*stg.top1));fill(tiers[2],Math.round(total*stg.top2));fill(tiers[3],Math.round(total*stg.top3));
+  var l4=total-Math.round(total*stg.top1)-Math.round(total*stg.top2)-Math.round(total*stg.top3);fill(tiers[4],l4);
+  var used=[];S.bpData.forEach(function(r){if(r.cid===cid)r.items.forEach(function(x){used.push(x.text)})});
+  alloc.forEach(function(a){if(used.indexOf(a.text)>=0){var c=cmts[a.code];for(var k=0;k<c.length;k++){if(used.indexOf(c[k].text)<0){a.text=c[k].text;a.idx=k;a.img=c[k].img||'';break}}}used.push(a.text)});
+  var items=alloc.map(function(a){return{code:a.code,text:a.text,prio:a.prio,idx:a.idx,img:a.img}});
+  var h='<div style=margin-top:12px><b>素材 '+cid+' | '+prod+' | '+stage+'</b> <span style=color:var(--mu);font-size:12px>'+items.length+'条</span>';
+  items.forEach(function(a,i){
+    var t=parseInt(a.prio.split(' ')[0]),tc=['','t1','t2','t3'][t];
+    h+='<div class=bp-res><span style=width:36px;font-size:10px;color:var(--mu)>'+a.code+'</span><span class="tag '+tc+'">'+a.prio.split(' ').slice(1).join(' ')+'</span><span style=flex:1>'+a.text+'</span>';
+    if(a.img){var iu=a.img.indexOf('http')===0?a.img:'images/'+a.img;h+='<img class=bp-img src='+iu+' onerror=this.style.display=none>'}
+    h+='<button style=padding:3px 8px;background:var(--pri);color:#fff;border:none;border-radius:4px;cursor:pointer;font-size:10px;font-weight:600 data-idx='+i+' onclick=cpBP('+i+')>复制</button></div>';
+  });
+  h+='<div style=margin-top:8px><button class="btn btn-sm" style=width:auto onclick=saveBP()>保存到历史</button></div></div>';
+  document.getElementById('bpResult').innerHTML=h;
+  window._bpItems=items;window._bpCid=cid;window._bpProd=prod;window._bpStage=stage;
+}
+function cpBP(i){var a=window._bpItems[i];if(!a)return;var div=document.createElement('div');div.contentEditable=true;div.style.position='fixed';div.style.left='-9999px';if(a.img){div.innerHTML=a.text+'<br><img src='+(a.img.indexOf('http')===0?a.img:'images/'+a.img)+' style=max-width:300px>'}else div.textContent=a.text;document.body.appendChild(div);var rng=document.createRange();rng.selectNodeContents(div);var sel=window.getSelection();sel.removeAllRanges();sel.addRange(rng);document.execCommand('copy');sel.removeAllRanges();document.body.removeChild(div);toast('已复制')}
+async function saveBP(){if(!window._bpItems)return;var e={cid:window._bpCid,prod:window._bpProd,stage:window._bpStage,time:new Date().toLocaleString('zh-CN'),items:window._bpItems};var ex=-1;for(var i=0;i<S.bpData.length;i++){if(S.bpData[i].cid===e.cid){ex=i;break}}if(ex>=0)S.bpData[ex]=e;else S.bpData.unshift(e);if(S.bpData.length>200)S.bpData=S.bpData.slice(0,200);if(SRV)try{await fetch(SRV+'/api/bp',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(S.bpData)})}catch(e){};localStorage.setItem('bp_local',JSON.stringify(S.bpData));toast('已保存');rBPHist()}
+
+function rBPHist(){
+  var h='<div class=card><div class=section-title>包评历史 ('+S.bpData.length+'条)</div>';
+  if(S.bpData.length===0){h+='<div style=color:var(--mu);text-align:center;padding:20px>暂无记录</div>'}
+  else{S.bpData.forEach(function(r,i){h+='<div class=hist-item><div style=display:flex;justify-content:space-between><b>'+r.cid+'</b><span style=font-size:10px;color:var(--mu)>'+r.time+'</span></div><div style=font-size:11px;color:var(--mu)>'+r.prod+' | '+r.stage+' | '+r.items.length+'条</div><div style=font-size:11px;color:#666;text-overflow:ellipsis;overflow:hidden;white-space:nowrap>'+r.items.map(function(t){return t.text}).join(' | ')+'</div><div style=margin-top:4px><button class="btn btn-o btn-sm" style=font-size:10px;padding:2px 8px onclick=togBP('+i+')>详情</button> <button style=font-size:10px;padding:2px 8px;background:var(--rd);color:#fff;border:none;border-radius:4px;cursor:pointer onclick=delBP('+i+')>删除</button></div><div id=bpd_'+i+' style=display:none;margin-top:6px;padding:8px;background:#fff;border-radius:6px></div></div>'})}
+  h+='</div>';
+  document.getElementById('content').innerHTML=h;
+}
+function togBP(i){var d=document.getElementById('bpd_'+i);if(d.style.display==='none'){var r=S.bpData[i];var h='';r.items.forEach(function(a){h+='<div style=padding:3px 0;font-size:12px><span style=color:var(--mu)>'+a.code+'</span> '+a.text+'</div>'});d.innerHTML=h;d.style.display='block'}else d.style.display='none'}
+function delBP(i){if(!confirm('删除？'))return;S.bpData.splice(i,1);localStorage.setItem('bp_local',JSON.stringify(S.bpData));rBPHist()}
+
+init();
+</script></body></html>
