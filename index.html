@@ -258,8 +258,8 @@ function navShell(tab){
   // Activate sidebar
   document.querySelectorAll('.sb-n div[data-nav]').forEach(function(d){d.classList.toggle('ac',d.dataset.nav===tab)});
   // BP tabs - show BP content, hide original tabs
-  if(tab==='bp'){document.getElementById('tc-bp').style.display='block';renderBP();return}
-  if(tab==='bphist'){document.getElementById('tc-bphist').style.display='block';renderBPHist();return}
+  if(tab==='bp'){var el=document.getElementById('tc-bp');el.style.display='block';document.querySelectorAll('.tab-content.on').forEach(function(e){e.classList.remove('on')});renderBP();return}
+  if(tab==='bphist'){var el=document.getElementById('tc-bphist');el.style.display='block';document.querySelectorAll('.tab-content.on').forEach(function(e){e.classList.remove('on')});renderBPHist();return}
   // Original tabs - show via swTab
   if(typeof swTab==='function')swTab(tab);
 }
