@@ -269,8 +269,6 @@ function initShell(){
 }
 
 // ====== ORIGINAL CODE (unchanged, with fixes) ======
-// Force local mode
-var _isLocal = true;
 // Preload data injection
 var _orig_ld_done = false;
 
@@ -1590,7 +1588,7 @@ function doGenBP(){
   al.forEach(function(a){if(used.indexOf(a.text)>=0){var c=cm[a.code];for(var k=0;k<c.length;k++){if(used.indexOf(c[k].text)<0){a.text=c[k].text;a.idx=k;a.img=c[k].img||"";break}}}used.push(a.text)});
   var items=al.map(function(a){return{code:a.code,text:a.text,prio:a.prio,idx:a.idx,img:a.img}});
   var h="<div style=margin-top:12px><b>素材 "+cid+" | "+prod+" | "+stage+"</b> <span style=color:#999;font-size:12px>"+items.length+"条</span>";
-  items.forEach(function(a,i){var t=parseInt(a.prio.split(" ")[0]),cls="t"+t;h+="<div class=bp-r><span style=width:36px;font-size:10px;color:#999>"+a.code+"</span><span class="tag "+cls+"" style=font-size:9px;padding:1px 6px;border-radius:3px;font-weight:600>"+a.prio.split(" ").slice(1).join(" ")+"</span><span style=flex:1>"+a.text+"</span>";if(a.img)h+="<img class=bp-img src="+(a.img.indexOf("http")===0?a.img:"images/"+a.img)+" onerror=this.style.display=none>";h+="<button style=padding:3px 8px;background:#534AB7;color:#fff;border:none;border-radius:4px;cursor:pointer;font-size:10px onclick=cpBPItem("+i+")>复制</button></div>"});
+  items.forEach(function(a,i){{var t=parseInt(a.prio.split(" ")[0]),cls="t"+t;h+="<div class=bp-r><span style=width:36px;font-size:10px;color:#999>"+a.code+"</span><span class=\""+cls+"\" style=font-size:9px;padding:1px 6px;border-radius:3px;font-weight:600>"+a.prio.split(" ").slice(1).join(" ")+"</span><span style=flex:1>"+a.text+"</span>";if(a.img)h+="<img class=bp-img src="+(a.img.indexOf("http")===0?a.img:"images/"+a.img)+" onerror=this.style.display=none>";h+="<button style=padding:3px 8px;background:#534AB7;color:#fff;border:none;border-radius:4px;cursor:pointer;font-size:10px onclick=cpBPItem("+i+")>复制</button></div>"}});
   h+="<div style=margin-top:8px><button style=padding:6px 14px;background:#534AB7;color:#fff;border:none;border-radius:6px;cursor:pointer onclick=saveBP('"+cid+"','"+prod+"','"+stage+"')>保存到历史</button></div></div>";
   document.getElementById("bpResult").innerHTML=h;window._bpi=items;window._bpc=cid;window._bpp=prod;window._bps=stage;
 }
